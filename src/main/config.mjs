@@ -5,7 +5,7 @@ import { dirname, join } from "node:path";
 const __dir = dirname(fileURLToPath(import.meta.url));
 export const ASSETS_DIR = join(__dir, "..", "..", "assets");
 export const TEMPLATE_PATH = join(ASSETS_DIR, "dashboard-template.html");
-export const MODEL = "claude-sonnet-4-6";
+export const MODEL = process.env.MODEL || "claude-sonnet-4-6";
 
 /**
  * 取得 API 金鑰。優先 ANTHROPIC_API_KEY 環境變數。
