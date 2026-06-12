@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Content-Security-Policy"
+  content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; frame-src file:;" />
+<title>決策迭代器</title>
+<link rel="stylesheet" href="ui.css" />
+</head>
+<body>
+<div id="app">
+  <!-- ===== 左欄:聊天 ===== -->
+  <div id="chat-pane">
+    <div id="chat-header">
+      <span class="brand">決策迭代器</span>
+      <select id="session-select" title="切換 session"></select>
+      <button id="btn-new-session" type="button">＋ 新 Session</button>
+    </div>
+
+    <div id="chat-messages" role="log" aria-live="polite"></div>
+
+    <div id="status-bar" aria-live="polite"></div>
+
+    <div id="chat-input-area">
+      <textarea
+        id="chat-input"
+        rows="2"
+        placeholder="說說你的決策問題…(Enter 送出,Shift+Enter 換行)"
+        aria-label="對話輸入"
+      ></textarea>
+      <button id="btn-send" type="button" disabled>送出</button>
+    </div>
+  </div>
+
+  <!-- ===== 右欄:看板 ===== -->
+  <div id="board-pane">
+    <div id="board-toolbar">
+      <span>決策看板(唯讀)</span>
+      <span style="flex:1"></span>
+      <button id="btn-open-folder" type="button">開啟資料夾</button>
+    </div>
+    <div id="board-empty">選擇或建立一個 Session 後,看板會在這裡顯示。</div>
+    <iframe id="board" hidden title="決策看板" sandbox="allow-scripts allow-same-origin"></iframe>
+  </div>
+</div>
+
+<!-- 新 Session Modal -->
+<div class="mask" id="new-session-mask" hidden role="dialog" aria-modal="true" aria-label="建立新 Session">
+  <div class="modal">
+    <h3>建立新 Session</h3>
+    <label for="input-title">決策主題(標題)</label>
+    <input id="input-title" type="text" placeholder="例:要不要把副業轉全職" maxlength="80" />
+    <label for="input-lens">視角(lens)</label>
+    <select id="input-lens">
+      <option value="business">生意(business)</option>
+      <option value="career">職涯(career)</option>
+      <option value="hybrid">生意×職涯(hybrid)</option>
+    </select>
+    <div class="modal-btns">
+      <button id="btn-modal-cancel" type="button">取消</button>
+      <button id="btn-modal-create" type="button">建立</button>
+    </div>
+  </div>
+</div>
+
+<script src="renderer.mjs" type="module"></script>
+</body>
+</html>
