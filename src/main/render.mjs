@@ -30,7 +30,13 @@ export function renderDashboard(state, dir) {
     throw new Error(`模板占位符 __STATE__ 應恰好出現 1 次,實際 ${hits} 次`);
   }
 
-  const injected = tpl.replaceAll("__STATE__", JSON.stringify(state, null, 2));
+  // 跳脫 < > 與行分隔符後再內嵌(與 web 軌 parity):JSON.stringify 不跳脫
+  // 這些字元,直接塞進 <script> 會被 HTML 解析提早關閉 script。桌面看板在
+  // 沙箱 file:// iframe、本地自有內容,風險為 LOW,仍做一致防護。
+  const json = JSON.stringify(state, null, 2)
+    .replace(/</g, "\\u003c").replace(/>/g, "\\u003e")
+    .replace(/\u2028/g, "\\u2028").replace(/\u2029/g, "\\u2029");
+  const injected = tpl.replaceAll("__STATE__", () => json);
   const outPath = join(dir, "dashboard.html");
   writeFileSync(outPath, injected, "utf8");
   return outPath;
