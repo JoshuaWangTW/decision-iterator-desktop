@@ -1,5 +1,5 @@
 // 主進程入口:BrowserWindow、ipcMain handlers、app.whenReady
-import { app, ipcMain, shell } from "electron";
+import { app, ipcMain, shell, BrowserWindow } from "electron";
 import { join } from "node:path";
 import { createMainWindow } from "./window.mjs";
 import {
